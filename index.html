@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>In-Game Currency Calculator</title>
+    
+    <!-- Favicon (Inline SVG) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><style>svg{background:%230f172a;border-radius:12%;}path{fill:%2338bdf8;stroke:%2310b981;stroke-width:3;}</style><path d='M 50 10 C 25 10 10 25 10 50 C 10 75 25 90 50 90 C 75 90 90 75 90 50 C 90 25 75 10 50 10 Z M 50 20 C 66 20 80 34 80 50 C 80 66 66 80 50 80 C 34 80 20 66 20 50 C 20 34 34 20 50 20 Z' /><path d='M 50 25 L 50 45 L 65 45 L 65 55 L 50 55 L 50 75 M 40 40 L 60 40 M 40 60 L 60 60' fill='none' stroke='%2310b981' stroke-width='6' stroke-linecap='round' /></svg>" type="image/svg+xml">
+    
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
@@ -15,7 +19,7 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="max-w-md w-full cyber-card rounded-xl overflow-hidden p-6 neon-border relative">
+    <div class="max-w-md w-full cyber-card rounded-xl overflow-hidden p-6 neon-border relative transition-all duration-300">
         <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-3xl font-bold mb-2 text-white glitch-hover cursor-default tracking-wider">
@@ -24,100 +28,112 @@
             <p class="text-slate-400 text-sm uppercase tracking-widest">Resource Acquisition Estimator</p>
         </div>
 
-        <!-- Inputs -->
-        <div class="space-y-6">
-            
-            <!-- Rate Input -->
-            <div class="group">
-                <label class="block text-blue-400 text-sm font-bold mb-2 uppercase tracking-wider">
-                    <i class="fas fa-bolt mr-1"></i> Earning Rate
-                </label>
-                <div class="relative">
-                    <input type="number" id="rate" placeholder="0" class="w-full cyber-input rounded-lg py-3 px-4 pl-10 text-xl font-bold">
-                    <div class="absolute left-3 top-3.5 text-slate-500">
-                        <i class="fas fa-coins"></i>
-                    </div>
-                    <div class="absolute right-3 top-4 text-xs text-slate-500 font-mono">
-                        / MIN
-                    </div>
-                </div>
-                <p class="text-xs text-slate-500 mt-1">How much currency you earn per minute.</p>
-            </div>
-
-            <!-- Target Input -->
-            <div class="group">
-                <label class="block text-emerald-400 text-sm font-bold mb-2 uppercase tracking-wider">
-                    <i class="fas fa-bullseye mr-1"></i> Target Amount
-                </label>
-                <div class="relative">
-                    <input type="number" id="target" placeholder="0" class="w-full cyber-input rounded-lg py-3 px-4 pl-10 text-xl font-bold">
-                    <div class="absolute left-3 top-3.5 text-slate-500">
-                        <i class="fas fa-sack-dollar"></i>
+        <!-- Calculator Section -->
+        <div id="calculator-view">
+            <div class="space-y-6">
+                <!-- Rate Input -->
+                <div class="group">
+                    <label class="block text-blue-400 text-sm font-bold mb-2 uppercase tracking-wider">
+                        <i class="fas fa-bolt mr-1"></i> Earning Rate
+                    </label>
+                    <div class="relative">
+                        <input type="number" id="rate" placeholder="0" class="w-full cyber-input rounded-lg py-3 px-4 pl-10 text-xl font-bold">
+                        <div class="absolute left-3 top-3.5 text-slate-500">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="absolute right-3 top-4 text-xs text-slate-500 font-mono">
+                            / MIN
+                        </div>
                     </div>
                 </div>
-                <p class="text-xs text-slate-500 mt-1">Total currency you need to farm.</p>
-            </div>
 
-            <!-- Current Balance Input -->
-            <div class="group">
-                <label class="block text-purple-400 text-sm font-bold mb-2 uppercase tracking-wider">
-                    <i class="fas fa-wallet mr-1"></i> Current Balance
-                </label>
-                <div class="relative">
-                    <input type="number" id="current" placeholder="0" class="w-full cyber-input rounded-lg py-3 px-4 pl-10 text-xl font-bold">
-                    <div class="absolute left-3 top-3.5 text-slate-500">
-                        <i class="fas fa-hand-holding-dollar"></i>
+                <!-- Target Input -->
+                <div class="group">
+                    <label class="block text-emerald-400 text-sm font-bold mb-2 uppercase tracking-wider">
+                        <i class="fas fa-bullseye mr-1"></i> Target Amount
+                    </label>
+                    <div class="relative">
+                        <input type="number" id="target" placeholder="0" class="w-full cyber-input rounded-lg py-3 px-4 pl-10 text-xl font-bold">
+                        <div class="absolute left-3 top-3.5 text-slate-500">
+                            <i class="fas fa-sack-dollar"></i>
+                        </div>
                     </div>
                 </div>
-                <p class="text-xs text-slate-500 mt-1">Amount you already have (deducted from target).</p>
+
+                <!-- Current Balance Input -->
+                <div class="group">
+                    <label class="block text-purple-400 text-sm font-bold mb-2 uppercase tracking-wider">
+                        <i class="fas fa-wallet mr-1"></i> Current Balance
+                    </label>
+                    <div class="relative">
+                        <input type="number" id="current" placeholder="0" class="w-full cyber-input rounded-lg py-3 px-4 pl-10 text-xl font-bold">
+                        <div class="absolute left-3 top-3.5 text-slate-500">
+                            <i class="fas fa-hand-holding-dollar"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <!-- Divider -->
+            <div class="h-px bg-slate-700 my-8 relative">
+                <div class="absolute left-1/2 -translate-x-1/2 -top-3 bg-slate-900 px-2 text-slate-500 text-xs border border-slate-700 rounded">
+                    ESTIMATED TIME
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="results-container" class="space-y-4 opacity-50 transition-opacity duration-300">
+                
+                <!-- Primary Time -->
+                <div class="bg-slate-800/50 rounded-lg p-4 border border-blue-500/20">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-slate-400 text-xs uppercase">Total Grind Time</span>
+                        <i class="far fa-clock text-blue-400"></i>
+                    </div>
+                    <div class="text-3xl text-white font-bold stat-value tracking-wider" id="formatted-time">
+                        -- <span class="text-sm text-slate-500">HR</span> -- <span class="text-sm text-slate-500">MIN</span>
+                    </div>
+                </div>
+
+                <!-- Secondary Stats -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-700">
+                        <div class="text-slate-400 text-[10px] uppercase mb-1">Total Minutes</div>
+                        <div class="text-xl text-emerald-400 stat-value" id="total-minutes">0</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-700">
+                        <div class="text-slate-400 text-[10px] uppercase mb-1">Completion At</div>
+                        <div class="text-xl text-purple-400 stat-value" id="completion-time">--:--</div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <button id="calendar-btn" disabled class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm">
+                        <i class="fas fa-calendar-plus"></i> Schedule
+                    </button>
+                    <button id="add-timer-btn" disabled class="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm">
+                        <i class="fas fa-stopwatch"></i> + Add Timer
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <!-- Divider -->
-        <div class="h-px bg-slate-700 my-8 relative">
-            <div class="absolute left-1/2 -translate-x-1/2 -top-3 bg-slate-900 px-2 text-slate-500 text-xs border border-slate-700 rounded">
-                ESTIMATED TIME
+        <!-- Active Timers List -->
+        <div id="timers-section" class="hidden mt-8 pt-6 border-t border-slate-700">
+            <h3 class="text-xs text-slate-400 uppercase tracking-widest mb-3 flex justify-between items-center">
+                Active Grinds
+                <span class="text-red-500 animate-pulse text-[10px]"><i class="fas fa-circle text-[8px] mr-1"></i>LIVE</span>
+            </h3>
+            <div id="timers-list" class="space-y-3">
+                <!-- Timers will be injected here via JS -->
             </div>
-        </div>
-
-        <!-- Results -->
-        <div id="results-container" class="space-y-4 opacity-50 transition-opacity duration-300">
-            
-            <!-- Primary Time (Formatted) -->
-            <div class="bg-slate-800/50 rounded-lg p-4 border border-blue-500/20">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-slate-400 text-xs uppercase">Total Grind Time</span>
-                    <i class="far fa-clock text-blue-400"></i>
-                </div>
-                <div class="text-3xl text-white font-bold stat-value tracking-wider" id="formatted-time">
-                    -- <span class="text-sm text-slate-500">HR</span> -- <span class="text-sm text-slate-500">MIN</span>
-                </div>
-            </div>
-
-            <!-- Secondary Stats Grid -->
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-700">
-                    <div class="text-slate-400 text-[10px] uppercase mb-1">Total Minutes</div>
-                    <div class="text-xl text-emerald-400 stat-value" id="total-minutes">0</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-700">
-                    <div class="text-slate-400 text-[10px] uppercase mb-1">Completion At</div>
-                    <div class="text-xl text-purple-400 stat-value" id="completion-time">--:--</div>
-                </div>
-            </div>
-
-            <!-- Calendar Button -->
-            <button id="calendar-btn" disabled class="w-full mt-4 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-500 opacity-50 cursor-not-allowed flex items-center justify-center gap-2">
-                <i class="fas fa-calendar-plus"></i> Schedule Grind Session
-            </button>
-
         </div>
 
         <!-- Status Bar -->
         <div class="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center text-xs font-mono text-slate-600">
-            <span>SYS.STATUS: <span class="text-emerald-500">ONLINE</span></span>
-            <span id="update-indicator">WAITING FOR INPUT...</span>
+            <span>SYS.STATUS: <span id="sys-status-text" class="text-emerald-500">ONLINE</span></span>
+            <span id="update-indicator">WAITING...</span>
         </div>
 
     </div>
