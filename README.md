@@ -1,7 +1,7 @@
 Here is the updated `README.md` incorporating the new features (Timers, Notifications, Calendar) while maintaining the installation options we discussed.
 
 
-# GrindCalc - In-Game Currency Calculator & Timer
+# [GrindCalc](https://grindcalc.harshalmachhi.in/) - In-Game Currency Calculator & Timer
 
 A cyberpunk-themed productivity tool designed for gamers. GrindCalc helps you calculate exactly how long you need to farm to reach a currency goal and provides multiple simultaneous timers to track your sessions.
 
