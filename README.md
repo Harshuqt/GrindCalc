@@ -31,7 +31,7 @@ GrindCalc is a static web application. It requires no backend server.
 
 ### Option 1: Power Users (Git Clone)
 ```bash
-git clone [https://github.com/yourusername/grindcalc.git](https://github.com/yourusername/grindcalc.git)
+git clone https://github.com/Harshuqt/GrindCalc.git
 cd grindcalc
 # Recommend running via a local server (e.g., npx http-server)
 `````
